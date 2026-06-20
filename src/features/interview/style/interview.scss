@@ -1,24 +1,22 @@
-// ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-muted: #7d8590;
-$accent: #ff2d78;
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$bg-page:      #0f1117;
+$bg-card:      #1e2433;
+$bg-panel:     #252d3d;
+$bg-input:     #1a2030;
+$border-color: #2d3548;
+$text-primary: #e2e8f0;
+$text-muted:   #64748b;
+$accent:       #6366f1;
+$accent-alt:   #8b5cf6;
+$font-stack:   system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-// severity palette
-$severity-high: #ff4d4d;
-$severity-medium: #f5a623;
-$severity-low: #3fb950;
+$severity-high:   #f87171;
+$severity-medium: #fb923c;
+$severity-low:    #4ade80;
 
 *::-webkit-scrollbar {
     display: none;
 }
 
-// ── Page Shell ────────────────────────────────────────────────────────────────
 .interview-page {
     width: 100%;
     min-height: 100vh;
@@ -31,7 +29,6 @@ $severity-low: #3fb950;
     box-sizing: border-box;
 }
 
-// ── 3-Column Layout ───────────────────────────────────────────────────────────
 .interview-layout {
     display: flex;
     width: 100%;
@@ -41,6 +38,7 @@ $severity-low: #3fb950;
     border: 1px solid $border-color;
     border-radius: 1rem;
     justify-content: space-between;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
 .interview-divider {
@@ -49,7 +47,6 @@ $severity-low: #3fb950;
     flex-shrink: 0;
 }
 
-// ── Left Nav ─────────────────────────────────────────────────────────────────
 .interview-nav {
     width: 220px;
     flex-shrink: 0;
@@ -58,9 +55,8 @@ $severity-low: #3fb950;
     flex-direction: column;
     justify-content: space-between;
     gap: 0.25rem;
-
-
-
+    background: $bg-panel;
+    border-radius: 1rem 0 0 1rem;
 
     &__label {
         font-size: 0.7rem;
@@ -89,12 +85,12 @@ $severity-low: #3fb950;
         transition: background-color 0.15s, color 0.15s;
 
         &:hover {
-            background-color: $bg-panel;
+            background-color: rgba($accent, 0.05);
             color: $text-primary;
         }
 
         &--active {
-            background-color: rgba($accent, 0.1);
+            background-color: rgba($accent, 0.12);
             color: $accent;
 
             .interview-nav__icon svg {
@@ -110,22 +106,12 @@ $severity-low: #3fb950;
     }
 }
 
-// ── Center Content ────────────────────────────────────────────────────────────
 .interview-content {
     flex: 1;
     padding: 1.75rem 2rem;
     overflow-y: auto;
-    min-height: initial;
     max-height: calc(100vh - 3rem);
     padding-bottom: 5rem;
-    align-items: flex-start;
-
-
-
-
-
-
-
 
     section {
         min-height: 100%;
@@ -157,7 +143,6 @@ $severity-low: #3fb950;
     }
 }
 
-// ── Question Cards ────────────────────────────────────────────────────────────
 .q-list {
     display: flex;
     flex-direction: column;
@@ -169,10 +154,11 @@ $severity-low: #3fb950;
     border: 1px solid $border-color;
     border-radius: 0.6rem;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
     &:hover {
-        border-color: lighten($border-color, 8%);
+        border-color: rgba($accent, 0.3);
+        box-shadow: 0 2px 12px rgba($accent, 0.05);
     }
 
     &__header {
@@ -234,7 +220,7 @@ $severity-low: #3fb950;
         p {
             margin: 0;
             font-size: 0.835rem;
-            color: lighten($text-muted, 15%);
+            color: #94a3b8;
             line-height: 1.6;
         }
     }
@@ -255,21 +241,19 @@ $severity-low: #3fb950;
         }
 
         &--answer {
-            color: #3fb950;
-            background-color: rgba(#3fb950, 0.1);
-            border: 1px solid rgba(#3fb950, 0.2);
+            color: #4ade80;
+            background-color: rgba(#4ade80, 0.1);
+            border: 1px solid rgba(#4ade80, 0.2);
         }
     }
 }
 
-// ── Road Map ──────────────────────────────────────────────────────────────────
 .roadmap-list {
     display: flex;
     flex-direction: column;
     gap: 0;
     position: relative;
 
-    // vertical timeline line
     &::before {
         content: '';
         position: absolute;
@@ -289,7 +273,6 @@ $severity-low: #3fb950;
     padding: 0.75rem 0 0.75rem 3.5rem;
     position: relative;
 
-    // dot on timeline
     &::before {
         content: '';
         position: absolute;
@@ -338,7 +321,7 @@ $severity-low: #3fb950;
             align-items: flex-start;
             gap: 0.5rem;
             font-size: 0.845rem;
-            color: lighten($text-muted, 12%);
+            color: #94a3b8;
             line-height: 1.5;
         }
     }
@@ -348,12 +331,11 @@ $severity-low: #3fb950;
         width: 5px;
         height: 5px;
         border-radius: 50%;
-        background-color: $text-muted;
+        background-color: $accent;
         margin-top: 8px;
     }
 }
 
-// ── Right Sidebar ─────────────────────────────────────────────────────────────
 .interview-sidebar {
     width: 240px;
     flex-shrink: 0;
@@ -361,6 +343,8 @@ $severity-low: #3fb950;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    background: $bg-panel;
+    border-radius: 0 1rem 1rem 0;
 }
 
 .sidebar-divider {
@@ -368,7 +352,6 @@ $severity-low: #3fb950;
     background-color: $border-color;
 }
 
-// Match Score
 .match-score {
     display: flex;
     flex-direction: column;
@@ -394,17 +377,21 @@ $severity-low: #3fb950;
         align-items: center;
         justify-content: center;
         border: 4px solid;
+        box-shadow: 0 0 20px rgba($accent, 0.15);
 
         &.score--high {
             border-color: $severity-low;
+            box-shadow: 0 0 20px rgba($severity-low, 0.2);
         }
 
         &.score--mid {
             border-color: $severity-medium;
+            box-shadow: 0 0 20px rgba($severity-medium, 0.2);
         }
 
         &.score--low {
             border-color: $severity-high;
+            box-shadow: 0 0 20px rgba($severity-high, 0.2);
         }
     }
 
@@ -429,7 +416,6 @@ $severity-low: #3fb950;
     }
 }
 
-// Skill Gaps
 .skill-gaps {
     display: flex;
     flex-direction: column;
@@ -475,5 +461,39 @@ $severity-low: #3fb950;
         color: $severity-low;
         background-color: rgba($severity-low, 0.1);
         border-color: rgba($severity-low, 0.25);
+    }
+}
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: $bg-page;
+
+    h1 {
+        font-size: 1.25rem;
+        color: $text-muted;
+        font-weight: 500;
+    }
+}
+
+.primary-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: $font-stack;
+
+    &:hover {
+        opacity: 0.9;
     }
 }
