@@ -41,7 +41,8 @@ export const generateResumePdf = async ({ interviewReportId }) => {
     try {
         const response = await api.post(
             `/api/interview/resume/pdf/${interviewReportId}`,
-            null
+            null,
+            { responseType: "blob" }
         )
         return response.data
     } catch(err) {
