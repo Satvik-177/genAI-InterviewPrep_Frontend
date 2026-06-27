@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router'
 import { useAuth } from '../../auth/hooks/useAuth.js'
 
 const Home = () => {
-
     const { loading, generateReport, reports, getReports } = useInterview()
     const { handleLogout } = useAuth()
     const [ jobDescription, setJobDescription ] = useState("")
@@ -42,23 +41,15 @@ const Home = () => {
 
             {/* Page Header */}
             <header className='page-header'>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
+                {/* Fixed: Removed inline styles that were blocking the media queries on mobile */}
+                <div className='page-header__container'>
+                    <div className='page-header__title-group'>
                         <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
                         <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
                     </div>
                     <button
                         className='logout-btn'
                         onClick={handleLogout}
-                        style={{
-                            background: 'transparent',
-                            border: '1px solid #e63e6d',
-                            color: '#e63e6d',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            fontSize: '14px'
-                        }}
                     >
                         Logout
                     </button>
