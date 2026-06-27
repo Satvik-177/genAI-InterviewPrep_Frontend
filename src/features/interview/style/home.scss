@@ -417,87 +417,35 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     }
 }
 
-/* --- Responsive Media Queries --- */
-@media (max-width: 768px) {
-    .home-page {
-        padding: 1.5rem 1rem;
-    }
-
-    .page-header {
-        & > div {
-            flex-direction: column;
-            gap: 1.25rem;
-            align-items: center;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 1.75rem;
-        }
-
-        p {
-            max-width: 100%;
-        }
-    }
-
-    .logout-btn {
-        align-self: center;
-        width: 100%;
-        max-width: 200px;
-        text-align: center;
-    }
-
+/* --- Final Fail-Safe Mobile Fix --- */
+@media screen and (max-width: 800px) {
     .interview-card {
-        &__body {
-            flex-direction: column !important;
-            min-height: auto; /* Removed strict height on mobile view to allow content streaming */
-        }
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
 
-        &__footer {
-            flex-direction: column-reverse; /* Put info-text below the full-width button */
-            gap: 1rem;
-            text-align: center;
+    .interview-card__body {
+        display: flex !important;
+        flex-direction: column !important; /* Force Left and Right panels to go top-to-bottom */
+        min-height: auto !important;
+        height: auto !important;
+        width: 100% !important;
+    }
 
-            .generate-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
+    .panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
     }
 
     .panel-divider {
         width: 100% !important;
         height: 1px !important;
-    }
-
-    .panel {
-        width: 100% !important;
-        flex: none; /* Block absolute stretching behaviour inside block stacks */
-
-        &--left {
-            .char-counter {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                text-align: right;
-                margin-top: 0.25rem;
-            }
-        }
-
-        &__textarea {
-            min-height: 160px;
-            flex: none; /* Ensure textareas explicitly respect fixed or minimum height bounds */
-        }
-    }
-
-    .recent-reports {
-        .reports-list {
-            flex-direction: column;
-            
-            .report-item {
-                width: 100%;
-                flex-basis: 100%;
-            }
-        }
+        margin: 1.5rem 0 !important;
+        background-color: #2d3548 !important;
     }
 }
