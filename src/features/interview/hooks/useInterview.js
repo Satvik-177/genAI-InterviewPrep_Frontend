@@ -11,7 +11,16 @@ export const useInterview = () => {
     const context = useContext(InterviewContext)
 
     if(!context) {
-        throw new Error("useInterview must be used within an InterviewProvider")
+        return {
+            loading: false,
+            error: null,
+            report: null,
+            reports: [],
+            generateReport: () => {},
+            getReportById: () => {},
+            getReports: () => {},
+            getResumePdf: () => {}
+        }
     }
 
     const { loading, setLoading, report, setReport, reports, setReports } = context
