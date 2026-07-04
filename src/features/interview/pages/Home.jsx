@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
@@ -7,17 +7,25 @@ import { useAuth } from '../../auth/hooks/useAuth.js'
 const Home = () => {
     const { loading, generateReport, reports, getReports } = useInterview()
     const { handleLogout } = useAuth()
-    const [ jobDescription, setJobDescription ] = useState("")
-    const [ selfDescription, setSelfDescription ] = useState("")
-    const resumeInputRef = useRef()
+    const [jobDescription, setJobDescription] = useState("")
+    const [selfDescription, setSelfDescription] = useState("")
+    const [resumeFile, setResumeFile] = useState(null)
+    const [resumeFileName, setResumeFileName] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
         getReports()
     }, [])
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if(file) {
+            setResumeFile(file)
+            setResumeFileName(file.name)
+        }
+    }
+
     const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[0]
         if(!jobDescription.trim()){
             return alert("Job description is required")
         }
@@ -28,7 +36,7 @@ const Home = () => {
         if(data?._id) navigate(`/interview/${data._id}`)
     }
 
-    if (loading) {
+    if(loading) {
         return (
             <main className='loading-screen'>
                 <h1>Loading your interview plan...</h1>
@@ -39,9 +47,7 @@ const Home = () => {
     return (
         <div className='home-page'>
 
-            {/* Page Header */}
             <header className='page-header'>
-                {/* Fixed: Removed inline styles that were blocking the media queries on mobile */}
                 <div className='page-header__container'>
                     <div className='page-header__title-group'>
                         <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
@@ -56,11 +62,9 @@ const Home = () => {
                 </div>
             </header>
 
-            {/* Main Card */}
             <div className='interview-card'>
                 <div className='interview-card__body'>
 
-                    {/* Left Panel - Job Description */}
                     <div className='panel panel--left'>
                         <div className='panel__header'>
                             <span className='panel__icon'>
@@ -71,7 +75,7 @@ const Home = () => {
                         </div>
                         <textarea
                             value={jobDescription}
-                            onChange={(e) => { setJobDescription(e.target.value) }}
+                            onChange={(e) => setJobDescription(e.target.value)}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
@@ -79,10 +83,8 @@ const Home = () => {
                         <div className='char-counter'>{jobDescription.length} / 5000 chars</div>
                     </div>
 
-                    {/* Vertical Divider */}
                     <div className='panel-divider' />
 
-                    {/* Right Panel - Profile */}
                     <div className='panel panel--right'>
                         <div className='panel__header'>
                             <span className='panel__icon'>
@@ -91,7 +93,6 @@ const Home = () => {
                             <h2>Your Profile</h2>
                         </div>
 
-                        {/* Upload Resume */}
                         <div className='upload-section'>
                             <label className='section-label'>
                                 Upload Resume
@@ -103,19 +104,29 @@ const Home = () => {
                                 </span>
                                 <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
                                 <p className='dropzone__subtitle'>PDF (Max 3MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf' />
+                                {resumeFileName && (
+                                    <p style={{ color: "#4ade80", fontSize: "0.8rem", marginTop: "4px" }}>
+                                        ✅ {resumeFileName}
+                                    </p>
+                                )}
+                                <input
+                                    hidden
+                                    type='file'
+                                    id='resume'
+                                    name='resume'
+                                    accept='.pdf,application/pdf,application/octet-stream,application/x-pdf'
+                                    onChange={handleFileChange}
+                                />
                             </label>
                         </div>
 
-                        {/* OR Divider */}
                         <div className='or-divider'><span>OR</span></div>
 
-                        {/* Quick Self-Description */}
                         <div className='self-description'>
                             <label className='section-label' htmlFor='selfDescription'>Quick Self-Description</label>
                             <textarea
                                 value={selfDescription}
-                                onChange={(e) => { setSelfDescription(e.target.value) }}
+                                onChange={(e) => setSelfDescription(e.target.value)}
                                 id='selfDescription'
                                 name='selfDescription'
                                 className='panel__textarea panel__textarea--short'
@@ -123,7 +134,6 @@ const Home = () => {
                             />
                         </div>
 
-                        {/* Info Box */}
                         <div className='info-box'>
                             <span className='info-box__icon'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" stroke="#1a1f27" strokeWidth="2" /><line x1="12" y1="16" x2="12.01" y2="16" stroke="#1a1f27" strokeWidth="2" /></svg>
@@ -133,7 +143,6 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Card Footer */}
                 <div className='interview-card__footer'>
                     <span className='footer-info'>AI-Powered Strategy Generation &bull; Approx 30s</span>
                     <button
@@ -146,7 +155,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Recent Reports List */}
             {reports.length > 0 && (
                 <section className='recent-reports'>
                     <h2>My Recent Interview Plans</h2>
@@ -162,7 +170,6 @@ const Home = () => {
                 </section>
             )}
 
-            {/* Page Footer */}
             <footer className='page-footer'>
                 <a href='#'>Privacy Policy</a>
                 <a href='#'>Terms of Service</a>
