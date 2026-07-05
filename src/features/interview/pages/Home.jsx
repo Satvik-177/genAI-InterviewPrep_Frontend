@@ -32,8 +32,17 @@ const Home = () => {
         if(!resumeFile && !selfDescription.trim()){
             return alert("Please upload a resume or provide a self description")
         }
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        if(data?._id) navigate(`/interview/${data._id}`)
+
+        try {
+            const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+            if(data && data._id) {
+                navigate(`/interview/${data._id}`)
+            } else {
+                alert("Report generated but could not navigate. Please try again.")
+            }
+        } catch(err) {
+            alert("Something went wrong: " + err.message)
+        }
     }
 
     if(loading) {
