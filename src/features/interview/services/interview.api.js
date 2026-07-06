@@ -10,7 +10,9 @@ export const generateInterviewReport = async ({ jobDescription, selfDescription,
         const formData = new FormData()
         formData.append("jobDescription", jobDescription)
         formData.append("selfDescription", selfDescription)
-        formData.append("resume", resumeFile)
+        if(resumeFile) {
+            formData.append("resume", resumeFile, resumeFile.name)
+        }
 
         const response = await api.post("/api/interview/", formData)
         return response.data
@@ -44,18 +46,6 @@ export const generateResumePdf = async ({ interviewReportId }) => {
             null,
             { responseType: "blob" }
         )
-        return response.data
-    } catch(err) {
-        throw err.response?.data || err
-    }
-}
-
-export const sendChatMessage = async ({ interviewId, message, history }) => {
-    try {
-        const response = await api.post(`/api/chat/${interviewId}`, {
-            message,
-            history
-        })
         return response.data
     } catch(err) {
         throw err.response?.data || err
