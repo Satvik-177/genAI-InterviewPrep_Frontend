@@ -25,26 +25,25 @@ const Home = () => {
         }
     }
 
-    const handleGenerateReport = async () => {
-        if(!jobDescription.trim()){
-            return alert("Job description is required")
-        }
-        if(!resumeFile && !selfDescription.trim()){
-            return alert("Please upload a resume or provide a self description")
-        }
-
-        try {
-            const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-            if(data && data._id) {
-                navigate(`/interview/${data._id}`)
-            } else {
-                alert("Report generated but could not navigate. Please try again.")
-            }
-        } catch(err) {
-            alert("Something went wrong: " + err.message)
-        }
+   const handleGenerateReport = async () => {
+    if(!jobDescription.trim()){
+        return alert("Job description is required")
+    }
+    if(!resumeFile && !selfDescription.trim()){
+        return alert("Please upload a resume or provide a self description")
     }
 
+    try {
+        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+        if(data && data._id) {
+            navigate(`/interview/${data._id}`)
+        } else {
+            alert("Error: " + JSON.stringify(data))
+        }
+    } catch(err) {
+        alert("Error: " + err.message)
+    }
+}
     if(loading) {
         return (
             <main className='loading-screen'>

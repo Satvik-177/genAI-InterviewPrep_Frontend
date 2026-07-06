@@ -29,17 +29,18 @@ export const useInterview = () => {
     const generateReport = async ({ jobDescription, selfDescription, resumeFile }) => {
         setLoading(true)
         setError(null)
-        let result = null
         try {
             const response = await generateInterviewReport({ jobDescription, selfDescription, resumeFile })
-            result = response.interviewReport
+            const result = response.interviewReport
             setReport(result)
-        } catch(error) {
-            setError(error.message || "Failed to generate report")
+            return result
+        } catch(err) {
+            const msg = err?.message || JSON.stringify(err) || "Failed to generate report"
+            setError(msg)
+            throw new Error(msg)
         } finally {
             setLoading(false)
         }
-        return result
     }
 
     const getReportById = async (interviewId) => {
@@ -50,8 +51,8 @@ export const useInterview = () => {
             const response = await getInterviewReportById(interviewId)
             result = response.interviewReport
             setReport(result)
-        } catch(error) {
-            setError(error.message || "Failed to fetch report")
+        } catch(err) {
+            setError(err.message || "Failed to fetch report")
         } finally {
             setLoading(false)
         }
@@ -66,8 +67,8 @@ export const useInterview = () => {
             const response = await getAllInterviewReports()
             result = response.interviewReports
             setReports(result)
-        } catch(error) {
-            setError(error.message || "Failed to fetch reports")
+        } catch(err) {
+            setError(err.message || "Failed to fetch reports")
         } finally {
             setLoading(false)
         }
