@@ -13,7 +13,13 @@ export const generateInterviewReport = async ({ jobDescription, selfDescription,
         if(resumeFile) {
             formData.append("resume", resumeFile, resumeFile.name)
         }
-        const response = await api.post("/api/interview/", formData)
+        
+        // FIX: Last se '/' hataya aur headers add kiye taaki mobile browser file crash na kare
+        const response = await api.post("/api/interview", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
         return response.data
     } catch(err) {
         throw err.response?.data || err
@@ -31,7 +37,7 @@ export const getInterviewReportById = async (interviewId) => {
 
 export const getAllInterviewReports = async () => {
     try {
-        const response = await api.get("/api/interview/")
+        const response = await api.get("/api/interview") // FIX: Trailing slash yahan se bhi hata diya
         return response.data
     } catch(err) {
         throw err.response?.data || err
